@@ -1,0 +1,169 @@
+Got it! Here’s the updated project report for your **Python Django Job Listing Website** project with **no JavaScript on the frontend**, using **only HTML and CSS**, and designed for local deployment (localhost). This will keep things simple and focused on backend + ML + scraping.
+
+---
+
+# Project Report: Job Listing Website (Python Django + ML + Web Scraping, No JS Frontend)
+
+---
+
+## 1. Project Overview
+
+The **Job Listing Website** is a Python-based web application built with **Django** that allows employers to post jobs and applicants to browse and apply. It incorporates a **machine learning model** to recommend jobs based on skills input and includes **web scraping** functionality to gather job data from external sources.
+
+The frontend uses only **HTML and CSS** — no JavaScript — ensuring a simple, clean user interface with server-rendered pages.
+
+---
+
+## 2. Objectives
+
+* Develop a role-based job portal with **Django** framework.
+* Implement **machine learning** for job recommendation.
+* Perform **web scraping** to collect real job listings.
+* Use only **HTML and CSS** for frontend templates — no JavaScript.
+* Support local development and testing on **localhost** without deployment concerns.
+
+---
+
+## 3. Tech Stack
+
+| Layer            | Technology                   |
+| ---------------- | ---------------------------- |
+| Frontend         | HTML, CSS                    |
+| Backend          | Python, Django               |
+| Database         | SQLite (default Django DB)   |
+| Machine Learning | scikit-learn, pandas, joblib |
+| Web Scraping     | BeautifulSoup, requests      |
+| Server           | Django development server    |
+
+---
+
+## 4. Features & Functionality
+
+### 4.1 User Roles
+
+* **Applicant**: Register, login, browse and search jobs, apply by submitting forms.
+* **Employer**: Register, login, create, edit, and delete job postings.
+* **Admin**: Can trigger scraping jobs to update listings.
+
+### 4.2 Job Listings
+
+* Jobs have title, description, location, category, salary range, company, posted date, and deadline.
+* Employers manage their job posts via Django forms.
+
+### 4.3 Job Search & Filtering
+
+* Users can filter jobs by keyword, category, and location using HTML form inputs.
+* Search handled via Django views and queryset filtering.
+* Results rendered on new pages.
+
+### 4.4 Job Application Workflow
+
+* Applicants apply by submitting a form with their details.
+* Employers can view application statuses in admin or protected views.
+
+### 4.5 Machine Learning Integration
+
+* ML model trained on scraped job data to classify job category based on skills input.
+* Users submit skills via HTML form; Django view passes input to ML model.
+* Prediction results rendered on server-generated response page.
+
+### 4.6 Web Scraping
+
+* Admin can run scraping tasks to collect job listings from external sites.
+* Scraped data saved to the database for ML training and display.
+* No frontend interaction needed for scraping.
+
+---
+
+## 5. Database Models (Django ORM)
+
+```python
+class User(AbstractUser):
+    is_employer = models.BooleanField(default=False)
+    is_applicant = models.BooleanField(default=False)
+    # additional fields as needed
+
+class Job(models.Model):
+    title = models.CharField(max_length=200)
+    description = models.TextField()
+    location = models.CharField(max_length=100)
+    category = models.CharField(max_length=100)
+    salary_min = models.IntegerField()
+    salary_max = models.IntegerField()
+    company = models.ForeignKey(User, on_delete=models.CASCADE)
+    date_posted = models.DateField(auto_now_add=True)
+    application_deadline = models.DateField()
+
+class Application(models.Model):
+    job = models.ForeignKey(Job, on_delete=models.CASCADE)
+    applicant = models.ForeignKey(User, on_delete=models.CASCADE)
+    resume = models.FileField(upload_to='resumes/')
+    cover_letter = models.TextField(blank=True)
+    status = models.CharField(max_length=20, choices=[('pending','Pending'),('shortlisted','Shortlisted'),('rejected','Rejected')])
+    date_applied = models.DateField(auto_now_add=True)
+```
+
+---
+
+## 6. URL Routing & Views
+
+* `/register/` — User registration (Applicant or Employer)
+* `/login/` — User login
+* `/jobs/` — Job listing with search/filter form
+* `/jobs/<id>/` — Job detail page
+* `/jobs/create/` — Employer job posting form
+* `/jobs/<id>/apply/` — Job application form (applicant)
+* `/predict/` — ML prediction form (input skills)
+* `/scrape/` — Admin scraping trigger (command or protected view)
+
+All routes respond with server-rendered **HTML templates**, no JavaScript required.
+
+---
+
+## 7. ML Prediction Flow (Example)
+
+1. User inputs skills in a form on `/predict/`.
+2. Form data submitted via POST.
+3. Django view loads the ML model (`joblib.load`), vectorizes input skills, and predicts job category.
+4. Result displayed on a new HTML page with recommendation details.
+
+---
+
+## 8. Security & Validation
+
+* Django’s built-in user authentication and permission system used.
+* Form validation handled by Django forms.
+* Uploaded resumes validated for file type and size.
+* Role-based access control implemented in views.
+
+---
+
+## 9. Challenges & Solutions
+
+| Challenge               | Solution                                                        |
+| ----------------------- | --------------------------------------------------------------- |
+| ML model integration    | Pre-train model and load in Django views using joblib           |
+| Web scraping automation | Use Django custom management commands or protected views        |
+| No JavaScript frontend  | Use classic HTML form submission with server-rendered templates |
+| File uploads            | Use Django’s FileField and media handling                       |
+
+---
+
+## 10. Why This Project is Ideal
+
+* Demonstrates strong **backend Python + Django skills**.
+* Integrates **machine learning** with a real application.
+* Incorporates **web scraping** to enhance data.
+* Clean, simple **frontend with HTML & CSS only** suitable for college demo.
+* No complex deployment setup; runs locally on localhost.
+* Easy to explain all components clearly in viva.
+
+---
+
+## Summary
+
+This project efficiently balances **web development, machine learning, and data scraping** within a manageable scope, using Django’s powerful backend and template system, while keeping the frontend simple and straightforward with only HTML and CSS.
+
+---
+
+If you want, I can help you prepare sample code snippets for the Django views, forms, or the ML integration part! Would you like that?

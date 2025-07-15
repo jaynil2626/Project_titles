@@ -1,0 +1,145 @@
+✅ Project Report: Job Listing Website — Full Stack (React + Node.js + Express + MongoDB)
+1. Project Overview
+This project is a MERN stack web application where:
+
+Employers can post, edit, and manage job listings.
+
+Applicants can search, filter, and apply for jobs.
+
+The platform includes role-based access, authentication, and optimized job search.
+
+2. Objectives
+Implement a modern full-stack job board using React and Node.
+
+Provide role-based features for Applicants and Employers.
+
+Include secure authentication using JWT.
+
+Allow job search and filter with pagination.
+
+Ensure separation of concerns via API-driven backend.
+
+3. Tech Stack
+Layer	Technology
+Frontend	React.js
+Backend	Node.js + Express.js
+Database	MongoDB (Mongoose ODM)
+Authentication	JWT + bcrypt
+Styling	CSS / Bootstrap / Tailwind (Optional)
+API Calls	Axios / Fetch API
+File Upload	Multer
+Deployment	Render / Vercel / Netlify (React), Render (Backend)
+
+4. Architecture
+Frontend (React):
+
+Components for Login/Register, Dashboard, JobList, JobDetails, ApplyForm
+
+State managed using Context API or Redux (optional)
+
+React Router for routing
+
+Backend (Express):
+
+REST APIs for user management, job posting, job application
+
+Protected routes based on user role
+
+5. Features
+➤ Employer
+Register/Login
+
+Post jobs
+
+Edit/Delete jobs
+
+View applicants
+
+➤ Applicant
+Register/Login
+
+View/search/filter jobs
+
+Apply with resume
+
+View application status
+
+6. MongoDB Schema Overview
+User
+
+json
+Copy
+Edit
+{
+  "name": "John Doe",
+  "email": "john@example.com",
+  "passwordHash": "...",
+  "role": "applicant" | "employer"
+}
+Job
+
+json
+Copy
+Edit
+{
+  "title": "Web Developer",
+  "description": "...",
+  "location": "Remote",
+  "category": "IT",
+  "salary": { "min": 30000, "max": 50000 },
+  "company": "ABC Corp",
+  "postedBy": ObjectId,
+  "deadline": "2025-12-31"
+}
+Application
+
+json
+Copy
+Edit
+{
+  "jobId": ObjectId,
+  "applicantId": ObjectId,
+  "resumeUrl": "...",
+  "status": "pending"
+}
+7. APIs (Express)
+Method	Route	Access	Description
+POST	/api/register	Public	Register user
+POST	/api/login	Public	Login user
+GET	/api/jobs	Public	Get all jobs + filters
+POST	/api/jobs	Employer	Create a job post
+PUT	/api/jobs/:id	Employer	Update job post
+DELETE	/api/jobs/:id	Employer	Delete job post
+POST	/api/applications	Applicant	Apply for a job
+GET	/api/applications/:id	Restricted	View application status
+
+8. Security & Optimization
+Password hashing using bcrypt
+
+Authentication via JWT tokens
+
+Role-based route protection via middleware
+
+Input validation (backend and frontend)
+
+Pagination for job listings
+
+MongoDB indexing for fast search
+
+9. Challenges & Solutions
+Challenge	Solution
+JWT token storage	Used HttpOnly cookies or localStorage
+File upload	Used Multer middleware
+State management	Used Context or Redux for auth/jobs
+Pagination	Backend + frontend sync via API
+
+10. Why This Project Works
+Uses full MERN stack (industry-relevant)
+
+Real-world feature set (CRUD + auth + filtering)
+
+Clean separation of backend and frontend
+
+Strong frontend user experience with React
+
+Great for explaining modern web architecture in viva
